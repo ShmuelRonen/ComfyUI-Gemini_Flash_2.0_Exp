@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-gemini_flash_2.0_exp"
+description = "A ComfyUI custom node that integrates Google's Gemini Flash 2.0 Experimental model, enabling multimodal analysis of text, images, video frames, and audio directly within ComfyUI workflows."
+version = "1.0.0"
+license = {file = "LICENSE"}
+dependencies = ["google-generativeai>0.4.1"]
+
+[project.urls]
+Repository = "https://github.com/ShmuelRonen/ComfyUI-Gemini_Flash_2.0_Exp"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-Gemini_Flash_2.0_Exp"
+Icon = ""
