@@ -59,24 +59,19 @@ def load_module(file_name):
         return None
 
 # Load the modules
-gemini_module = load_module("Gemini_Flash_Node.py")
-audio_module = load_module("nodes_audio_recorder.py")
+py_files = ["Gemini_Flash_Node.py", "nodes_audio_recorder.py"]
+available_modules = []
+NODE_CLASS_MAPPINGS = {}
+NODE_DISPLAY_NAME_MAPPINGS = {}
 
-# Combine mappings if modules loaded successfully
-if gemini_module and audio_module:
-    NODE_CLASS_MAPPINGS = {
-        **gemini_module.NODE_CLASS_MAPPINGS,
-        **audio_module.NODE_CLASS_MAPPINGS
-    }
-
-    NODE_DISPLAY_NAME_MAPPINGS = {
-        **gemini_module.NODE_DISPLAY_NAME_MAPPINGS,
-        **audio_module.NODE_DISPLAY_NAME_MAPPINGS
-    }
-else:
-    # Fallback for error cases
-    NODE_CLASS_MAPPINGS = {}
-    NODE_DISPLAY_NAME_MAPPINGS = {}
+for py_file in py_files:
+    module = load_module(py_file)
+    if module:
+        available_modules.append(module)
+        NODE_CLASS_MAPPINGS.update(module.NODE_CLASS_MAPPINGS)
+        NODE_DISPLAY_NAME_MAPPINGS.update(module.NODE_DISPLAY_NAME_MAPPINGS)
+    else:
+        print(f"Failed to load module {py_file}")
 
 # Define web directory
 WEB_DIRECTORY = os.path.join(current_path, "web")
