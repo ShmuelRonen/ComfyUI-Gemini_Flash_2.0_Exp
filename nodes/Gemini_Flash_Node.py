@@ -57,8 +57,23 @@ class ChatHistory:
 
 class Gemini_Flash_200_Exp:
     def __init__(self, api_key=None):
-        config = get_config()
-        self.api_key = api_key or config.get("GEMINI_API_KEY")
+        env_key = os.environ.get("GEMINI_API_KEY")
+
+        # Common placeholder values to ignore
+        placeholders = {"token_here", "place_token_here", "your_api_key",
+                        "api_key_here", "enter_your_key", "<api_key>"}
+
+        if env_key and env_key.lower().strip() not in placeholders:
+            self.api_key = env_key
+        else:
+            # Try the provided api_key parameter
+            self.api_key = api_key
+
+            # If still not found, try to get from config
+            if self.api_key is None:
+                config = get_config()
+                self.api_key = config.get("GEMINI_API_KEY")
+
         self.chat_history = ChatHistory()
         if self.api_key is not None:
             self.configure_genai()
